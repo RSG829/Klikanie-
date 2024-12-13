@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gra o Klikaniu</title>
+</head>
+<body>
+    <h1>Gra o Klikaniu!</h1>
+    <p>Pieniądze: <span id="money">0</span></p>
+    <button id="clickButton">Kliknij mnie!</button>
+    <h2>Ulepszenia</h2>
+    <button id="upgradeButton" disabled>Kup ulepszenie (koszt: <span id="upgradeCost">10</span> pieniędzy)</button>
+    
+    <script>
+        let money = 0;
+        let upgradeCost = 10;
+        let clickValue = 1;
+
+        const moneyDisplay = document.getElementById("money");
+        const upgradeButton = document.getElementById("upgradeButton");
+        const upgradeCostDisplay = document.getElementById("upgradeCost");
+        const clickButton = document.getElementById("clickButton");
+
+        clickButton.addEventListener("click", () => {
+            money += clickValue;
+            moneyDisplay.textContent = money;
+
+            // Sprawdź, czy można kupić ulepszenie
+            if (money >= upgradeCost) {
+                upgradeButton.disabled = false;
+            }
+        });
+
+        upgradeButton.addEventListener("click", () => {
+            if (money >= upgradeCost) {
+                money -= upgradeCost;
+                clickValue += 1; // zwiększ wartość kliknięcia
+                moneyDisplay.textContent = money;
+                upgradeCost *= 2; // podwój koszt ulepszenia
+                upgradeCostDisplay.textContent = upgradeCost;
+                
+                // Zablokuj przycisk ulepszenia, jeśli brak pieniędzy
+                if (money < upgradeCost) {
+                    upgradeButton.disabled = true;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
